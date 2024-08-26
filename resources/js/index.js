@@ -4,6 +4,9 @@ import fs from 'fs';
 let browser;
 let data = [];
 
+
+const contactPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/'; // next div loop
+
 async function fbDetails(links) {
     try {
         // browser = await puppeteer.launch();
@@ -16,7 +19,6 @@ async function fbDetails(links) {
         for (const link of links) {
             const page = await browser.newPage();
             let url = '';
-            const errors = [];
 
             // Check Valied Link
             if (!url.includes('https://') && !url.includes('http://')) {
@@ -27,51 +29,52 @@ async function fbDetails(links) {
                 continue;
             }
 
+            const currentPageAllData = {};
+
             try {
                 await page.goto(url, { waitUntil: 'networkidle0', timeout: 40000 });
-
                 // if scroll page then use
                 // await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
 
                 // remove popup
                 await page.keyboard.press('Escape');
 
-
-
-
-                const result = await page.evaluate(() => {
-                    const mainPath =
-                        '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div[2]/div/div[1]/div[2]/div/div[1]/div/div/div/div/div[2]/div[2]/div/ul/';
-                    const elements = document.evaluate(
-                        `${mainPath}div`,
+                // Post Data Collect
+                const postDetails = await page.evaluate(() => {
+                    const data = {};
+                    // Post Thake Name collect
+                    const namePath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div[2]/div/div[2]/div/div[1]/div/div/div/div/div/div/div/div/div/div/div[13]/div/div/div[2]/div/div[2]/div/div[1]';
+                    const nameElement = document.evaluate(
+                        namePath,
                         document,
                         null,
-                        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+                        XPathResult.FIRST_ORDERED_NODE_TYPE,
                         null
-                    );
-                    const data = {};
+                    ).singleNodeValue;
+                    const nameText = nameElement.innerText.trim();
 
-                    for (let i = 0; i < elements.snapshotLength; i++) {
-                        const element = elements.snapshotItem(i);
-                        const iconElement = element.querySelector('img');
-                        data[`element_${i}`] = {
-                            textContent: element ? element.textContent.trim() : 'Element not found',
-                            iconSrc: iconElement ? iconElement.src : ''
-                        };
-                    }
+                    // Post Thake Time Collect
+                    const timePath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div[2]/div/div[2]/div/div[1]/div/div/div/div/div/div/div/div/div/div/div[13]/div/div/div[2]/div/div[2]/div/div[2]';
+                    const timeElement = document.evaluate(
+                        timePath,
+                        document,
+                        null,
+                        XPathResult.FIRST_ORDERED_NODE_TYPE,
+                        null
+                    ).singleNodeValue;
+                    const timeText = timeElement.innerText.trim().replace(/\s+/g, ' ');
 
-                    data['element_100'] = { url: window.location.href };
-                    return data;
+                    // Send Data post array
+                    return data['postDetails'] = { name: nameText , timeText: timeText };
                 });
-
-                data.push(result);
-
+                currentPageAllData['postDetails'] = postDetails;
             } catch (error) {
                 console.error(`An Error Ocurred for ${url} : `, error.message);
                 data.push({ url, error: error.message });
             }
-
             await page.close();
+
+            data.push(currentPageAllData);
         }
     } catch (error) {
         console.error('Error occurred:', error);
