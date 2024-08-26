@@ -20,20 +20,16 @@ class ScapeController extends Controller
             'profile.php?id=61552158826567'
         ];
 
-  // Encode usernames to pass them to the Node.js script
-  $encodedUsernames = json_encode($usernames, JSON_UNESCAPED_SLASHES); // Properly encoded JSON without slashes
+        // Encode usernames to pass them to the Node.js script
+        $encodedUsernames = json_encode($usernames, JSON_UNESCAPED_SLASHES);
 
-  // Escape the JSON string properly
-  $escapedUsernames = addslashes($encodedUsernames);
+        // Escape the JSON string properly
+        $escapedUsernames = addslashes($encodedUsernames);
 
-  // Construct the shell command
-  $command = "$nodeExec $scriptPath \"$escapedUsernames\"";
+        // Construct the shell command
+        $command = "$nodeExec $scriptPath \"$escapedUsernames\"";
 
-  Log::info('Command: ' . $command); // Log the command to check if it is correct
-
-
-
-
+        Log::info('Command: ' . $command);
 
         try {
             $output = shell_exec($command);
