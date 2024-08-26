@@ -15,11 +15,16 @@ async function fbDetails(links) {
             args: ['--start-maximized'],
         });
 
+        // check Url String
+        function checkProfileId(url) {
+            const pattern = /profile\.php\?id=\d+/;
+            return pattern.test(url);
+        }
 
         for (const link of links) {
             const page = await browser.newPage();
             let url = '';
-
+            let profileIdUrl = null;
             // Check Valied Link
             if (!url.includes('https://') && !url.includes('http://')) {
                 url = link;
@@ -33,6 +38,10 @@ async function fbDetails(links) {
 
             try {
                 await page.goto(url, { waitUntil: 'networkidle0', timeout: 40000 });
+                if(checkProfileId(url)){
+                    profileIdUrl = page.url();
+                }
+
                 // if scroll page then use
                 // await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
 
@@ -65,7 +74,7 @@ async function fbDetails(links) {
                     const timeText = timeElement.innerText.trim().replace(/\s+/g, ' ');
 
                     // Send Data post array
-                    return data['postDetails'] = { name: nameText , timeText: timeText };
+                    return data['postDetails'] = { name: nameText, timeText: timeText };
                 });
                 currentPageAllData['postDetails'] = postDetails;
             } catch (error) {
@@ -74,7 +83,38 @@ async function fbDetails(links) {
             }
             await page.close();
 
+
+
+            // New Page Contact Details
+            const newPage = await browser.newPage();
+            let newUrl = '';
+            if (checkProfileId(link)) {
+                if (profileIdUrl != null) {
+                    newUrl = `${profileIdUrl}?sk=about`;
+                } else {
+                    await newPage.close();
+                }
+            } else {
+                newUrl = `${link}/about_contact_and_basic_info`;
+            }
+
+            await newPage.goto(newUrl, { waitUntil: 'networkidle0', timeout: 60000 });
+            try {
+                await newPage.click('body');
+                // await page.mouse.click(100, 200);
+                await newPage.keyboard.press('Escape');
+                console.log('click');
+
+                currentPageAllData['check'] = { click: 'clicek' };
+            } catch (error) {
+                console.error(`An Error Ocurred for Contact Details ${newUrl} : `, error.message);
+                data.push({ newUrl, error: error.message });
+            }
+            await newPage.close();
+
+
             data.push(currentPageAllData);
+
         }
     } catch (error) {
         console.error('Error occurred:', error);
