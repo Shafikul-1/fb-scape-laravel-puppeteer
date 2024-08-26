@@ -1,25 +1,27 @@
 import puppeteer from 'puppeteer';
+import fs from 'fs';
 
 let browser;
 let data = [];
 
-async function fbDetails(usernames) {
+async function fbDetails(links) {
     try {
         // browser = await puppeteer.launch();
         browser = await puppeteer.launch({
-          headless: false,
-          args: ['--start-maximized'],
+            headless: false,
+            args: ['--start-maximized'],
         });
 
 
-        for (const username of usernames) {
+        for (const link of links) {
+
+            // Create New Page
             const page = await browser.newPage();
             let url = '';
 
-            if (typeof username === 'number') {
-                url = `https://www.facebook.com/profile.php?id=${username}`;
-            } else if (typeof username === 'string') {
-                url = `https://www.facebook.com/${username}`;
+            // Check Valied Link
+            if (!url.includes('https://') && !url.includes('http://')) {
+                url = link;
             } else {
                 console.error('Invalid username type.');
                 await page.close();
@@ -38,6 +40,9 @@ async function fbDetails(usernames) {
                     ).singleNodeValue !== null
                 );
             });
+
+            // remove popup
+            // await page.goto(url);
 
             const result = await page.evaluate(() => {
                 const mainPath =
@@ -74,12 +79,27 @@ async function fbDetails(usernames) {
         if (browser) {
             await browser.close();
         }
-        console.log(JSON.stringify(data));
+
+        // console.log(JSON.stringify(data));
+        fs.writeFile('output.json', JSON.stringify(data, null, 2), (err) => {
+            if (err) {
+                console.error('Error writing file:', err);
+            } else {
+                console.log(`File output.json has been saved.`);
+            }
+        });
     }
 }
 
-// Example usage
+// Get usernames from command-line arguments
+// const usernames = JSON.parse(process.argv[2]);
+// fbDetails(usernames);
+
+
 fbDetails([
-    'TroyMichaelPhotgraphy',
-    'SpiritOfTheTetonsPhotography',
-    'profile.php?id=61552158826567']);
+    'https://www.facebook.com/TroyMichaelPhotgraphy',
+    'https://www.facebook.com/SpiritOfTheTetonsPhotography',
+    'https://www.facebook.com/profile.php?id=61552158826567'
+]);
+
+
