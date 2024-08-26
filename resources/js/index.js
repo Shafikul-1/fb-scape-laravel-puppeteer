@@ -50,28 +50,26 @@ async function fbDetails(links) {
 
                 // Post Data Collect
                 const postDetails = await page.evaluate(() => {
+
                     const data = {};
+                    function textGet(contentPath){
+                        const elementText = document.evaluate(
+                            contentPath,
+                            document,
+                            null,
+                            XPathResult.FIRST_ORDERED_NODE_TYPE,
+                            null
+                        ).singleNodeValue;
+                        return elementText.innerText.trim();
+                    }
+
                     // Post Thake Name collect
                     const namePath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div[2]/div/div[2]/div/div[1]/div/div/div/div/div/div/div/div/div/div/div[13]/div/div/div[2]/div/div[2]/div/div[1]';
-                    const nameElement = document.evaluate(
-                        namePath,
-                        document,
-                        null,
-                        XPathResult.FIRST_ORDERED_NODE_TYPE,
-                        null
-                    ).singleNodeValue;
-                    const nameText = nameElement.innerText.trim();
+                    const nameText = textGet(namePath);
 
                     // Post Thake Time Collect
                     const timePath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div[2]/div/div[2]/div/div[1]/div/div/div/div/div/div/div/div/div/div/div[13]/div/div/div[2]/div/div[2]/div/div[2]';
-                    const timeElement = document.evaluate(
-                        timePath,
-                        document,
-                        null,
-                        XPathResult.FIRST_ORDERED_NODE_TYPE,
-                        null
-                    ).singleNodeValue;
-                    const timeText = timeElement.innerText.trim().replace(/\s+/g, ' ');
+                    const timeText = textGet(timePath).replace(/\s+/g, ' ');
 
                     // Send Data post array
                     return data['postDetails'] = { name: nameText, timeText: timeText };
@@ -98,14 +96,66 @@ async function fbDetails(links) {
                 newUrl = `${link}/about_contact_and_basic_info`;
             }
 
-            await newPage.goto(newUrl, { waitUntil: 'networkidle0', timeout: 60000 });
             try {
-                await newPage.click('body');
+                await newPage.goto(newUrl, { waitUntil: 'networkidle0', timeout: 60000 });
+                // await newPage.click('body');
                 // await page.mouse.click(100, 200);
-                await newPage.keyboard.press('Escape');
-                console.log('click');
+                // await newPage.keyboard.press('Escape');
+                const contactDetails = await newPage.evaluate(()=> {
 
-                currentPageAllData['check'] = { click: 'clicek' };
+                    const data = {};
+                    function textGet(contentPath){
+                        const elementText = document.evaluate(
+                            contentPath,
+                            document,
+                            null,
+                            XPathResult.FIRST_ORDERED_NODE_TYPE,
+                            null
+                        ).singleNodeValue;
+                        return elementText ? elementText.innerText.trim() : 'Not found';
+                    }
+
+                    function divCount(countPath){
+                        const nodesSnapShot = document.evaluate(countPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+                        return nodesSnapShot.snapshotLength;
+                    }
+
+                    const contactDetailsPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[2]/div/div';
+                    let detailsData = {};
+                    for (let i = 0; i <= divCount(contactDetailsPath); i++) {
+                        let detailsBasePath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[2]/div/';
+                        if(i == 0){
+                            continue;
+                        }
+                        if(i == 1){
+                            const contactValuePath = `${detailsBasePath}div[${i}]`;
+                            const contactValue = textGet(contactValuePath);
+                            detailsData['category'] = contactValue;
+                        }
+                        if(i == 2){
+                            const contactValuePath = `${detailsBasePath}div[${i}]/div/div/div[2]/div[2]/div[1]`;
+                            const contactKeyPath = `${detailsBasePath}div[${i}]/div/div/div[2]/div[2]/div[2]`;
+                            const contactKey = textGet(contactKeyPath);
+                            const contactValue = textGet(contactValuePath);
+                            detailsData[contactKey] = contactValue;
+                        }
+                        const contactValuePath = `${detailsBasePath}div[${i}]/div/div/div[2]/ul/li/div/div/div[2]`;
+                        const contactKey = textGet(contactValuePath);
+
+                        const contactKeyPath = `${detailsBasePath}div[${i}]/div/div/div[2]/ul/li/div/div/div[1]`;
+                        const contactValue = textGet(contactKeyPath);
+                        detailsData[contactKey] = contactValue;
+
+                    }
+
+                    return data['contactDetails'] = detailsData;
+
+
+
+                });
+                currentPageAllData['contactDetails'] = contactDetails;
+
+
             } catch (error) {
                 console.error(`An Error Ocurred for Contact Details ${newUrl} : `, error.message);
                 data.push({ newUrl, error: error.message });
@@ -140,3 +190,5 @@ fbDetails([
 ]);
 
 
+// '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[2]/div/div[sfsdfsdf]/div/div/div[2]/ul/li/div/div/div[1]'
+// '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[3]'
