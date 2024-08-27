@@ -15,9 +15,9 @@ class ScapeController extends Controller
 
         // Usernames array
         $usernames = [
-            'TroyMichaelPhotgraphy',
-            'SpiritOfTheTetonsPhotography',
-            'profile.php?id=61552158826567'
+            'https://www.facebook.com/TroyMichaelPhotgraphy',
+            'https://www.facebook.com/SpiritOfTheTetonsPhotography',
+            'https://www.facebook.com/profile.php?id=61552158826567'
         ];
 
         // Encode usernames to pass them to the Node.js script

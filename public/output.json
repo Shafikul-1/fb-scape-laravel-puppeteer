@@ -1,113 +1,433 @@
 [
   {
-    "element_0": {
-      "textContent": "Page · Photographer · Video creator · Social media agency",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/4PEEs7qlhJk.png"
-    },
-    "element_1": {
-      "textContent": "Costa Mesa, CA, US · Newport Beach, CA, US · Corona del Mar, CA, US · Corona, CA, US · Riverside, CA, US · Irvine, CA, US · Santa Monica, CA, US · Los Angeles, CA, US · Orange, CA, US · Laguna Beach, CA, US",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yc/r/-e1Al38ZrZL.png"
-    },
-    "element_2": {
-      "textContent": "+1 949-989-6103",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yT/r/Dc7-7AgwkwS.png"
-    },
-    "element_3": {
-      "textContent": "book@troymichaelphotography.com",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/2PIcyqpptfD.png"
-    },
-    "element_4": {
-      "textContent": "TroyMichaelPhotography",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yj/r/LPnnw6HJjJT.png"
-    },
-    "element_5": {
-      "textContent": "troymichaelphotography.com",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/BQdeC67wT9z.png"
-    },
-    "element_6": {
-      "textContent": "Online booking",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/ym/r/arM1m3sNXPr.png"
-    },
-    "element_7": {
-      "textContent": "Price range · £££",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yV/r/vUmfhJXfJ5R.png"
-    },
-    "element_8": {
-      "textContent": "Not yet rated (0 reviews)",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/4Lea07Woawi.png"
-    },
-    "element_100": {
-      "url": "https://www.facebook.com/TroyMichaelPhotgraphy"
-    }
+    "url": "[",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
   },
   {
-    "element_0": {
-      "textContent": "Page · Photographer",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/4PEEs7qlhJk.png"
-    },
-    "element_1": {
-      "textContent": "Driggs, ID, United States, Idaho",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/8k_Y-oVxbuU.png"
-    },
-    "element_2": {
-      "textContent": "+1 208-527-6187",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yT/r/Dc7-7AgwkwS.png"
-    },
-    "element_3": {
-      "textContent": "pmitchell@spiritofthetetons.com",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/2PIcyqpptfD.png"
-    },
-    "element_4": {
-      "textContent": "spiritofthetetonsphotography",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yj/r/LPnnw6HJjJT.png"
-    },
-    "element_5": {
-      "textContent": "spiritofthetetons.com",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/BQdeC67wT9z.png"
-    },
-    "element_6": {
-      "textContent": "Not yet rated (0 reviews)",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/4Lea07Woawi.png"
-    },
-    "element_100": {
-      "url": "https://www.facebook.com/SpiritOfTheTetonsPhotography"
-    }
+    "newUrl": "[/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "\"",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
   },
   {
-    "element_0": {
-      "textContent": "Page · Photographer",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/4PEEs7qlhJk.png"
-    },
-    "element_1": {
-      "textContent": "Georgetown, TX, United States, Texas",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/8k_Y-oVxbuU.png"
-    },
-    "element_2": {
-      "textContent": "+1 512-623-0696",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yT/r/Dc7-7AgwkwS.png"
-    },
-    "element_3": {
-      "textContent": "diamondcowgirlphotography@gmail.com",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/2PIcyqpptfD.png"
-    },
-    "element_4": {
-      "textContent": "diamondcowgirlphotography",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yj/r/LPnnw6HJjJT.png"
-    },
-    "element_5": {
-      "textContent": "diamondcowgirlphotography.com",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/BQdeC67wT9z.png"
-    },
-    "element_6": {
-      "textContent": "Price range · £",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/yV/r/vUmfhJXfJ5R.png"
-    },
-    "element_7": {
-      "textContent": "Not yet rated (0 reviews)",
-      "iconSrc": "https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/4Lea07Woawi.png"
-    },
-    "element_100": {
-      "url": "https://www.facebook.com/people/Diamond-Cowgirl-Photography/61552158826567/"
-    }
+    "newUrl": "\"/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "h",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "h/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "t",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "t/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "t",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "t/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "p",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "p/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "s",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "s/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": ":",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": ":/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "/",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "//about_contact_and_basic_info",
+    "error": "net::ERR_FILE_NOT_FOUND at //about_contact_and_basic_info"
+  },
+  {},
+  {
+    "url": "/",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "//about_contact_and_basic_info",
+    "error": "net::ERR_FILE_NOT_FOUND at //about_contact_and_basic_info"
+  },
+  {},
+  {
+    "url": "w",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "w/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "w",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "w/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "w",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "w/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": ".",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "./about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "f",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "f/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "a",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "a/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "c",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "c/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "e",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "e/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "b",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "b/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "o",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "o/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "o",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "o/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "k",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "k/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": ".",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "./about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "c",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "c/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "o",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "o/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "m",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "m/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "/",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "//about_contact_and_basic_info",
+    "error": "net::ERR_FILE_NOT_FOUND at //about_contact_and_basic_info"
+  },
+  {},
+  {
+    "url": "T",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "T/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "r",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "r/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "o",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "o/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "y",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "y/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "M",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "M/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "i",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "i/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "c",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "c/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "h",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "h/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "a",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "a/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "e",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "e/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "l",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "l/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "P",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "P/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "h",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "h/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "o",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "o/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "t",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "t/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "g",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "g/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "r",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "r/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "a",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "a/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "p",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "p/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "h",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "h/about_contact_and_basic_info",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {},
+  {
+    "url": "y",
+    "error": "Protocol error (Page.navigate): Cannot navigate to invalid URL"
+  },
+  {
+    "newUrl": "y/about_contact_and_basic_info",
+    "error": "Requesting main frame too early!"
   }
 ]

@@ -38,7 +38,7 @@ async function fbDetails(links) {
 
             try {
                 await page.goto(url, { waitUntil: 'networkidle0', timeout: 40000 });
-                if(checkProfileId(url)){
+                if (checkProfileId(url)) {
                     profileIdUrl = page.url();
                 }
 
@@ -52,7 +52,7 @@ async function fbDetails(links) {
                 const postDetails = await page.evaluate(() => {
 
                     const data = {};
-                    function textGet(contentPath){
+                    function textGet(contentPath) {
                         const elementText = document.evaluate(
                             contentPath,
                             document,
@@ -101,10 +101,10 @@ async function fbDetails(links) {
                 // await newPage.click('body');
                 // await page.mouse.click(100, 200);
                 // await newPage.keyboard.press('Escape');
-                const contactDetails = await newPage.evaluate(()=> {
+                const contactDetails = await newPage.evaluate(() => {
 
                     const data = {};
-                    function textGet(contentPath){
+                    function textGet(contentPath) {
                         const elementText = document.evaluate(
                             contentPath,
                             document,
@@ -115,13 +115,36 @@ async function fbDetails(links) {
                         return elementText ? elementText.innerText.trim() : 'Not found';
                     }
 
-                    function divCount(countPath){
+                    function divCount(countPath) {
                         const nodesSnapShot = document.evaluate(countPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
                         return nodesSnapShot.snapshotLength;
                     }
 
-                    const contactDetailsPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[2]/div/div';
+
                     let detailsData = {};
+
+                    // const contactDetailsMailPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div';
+                    // for (let mainPath = 0; mainPath < divCount(contactDetailsMailPath); mainPath++) {
+                    //     let contactDetailsMailPathNext = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div';
+
+                    //     for (let contactMain = 0; contactMain < divCount(`${contactDetailsMailPathNext}/div[${mainPath}]/div/div`); contactMain++) {
+
+                    //         console.log(contactDetailsMailPathNext);
+                    //         let detailsBasePath = `${contactDetailsMailPathNext}/div[${mainPath}]/div/`;
+                    //         // if (contactMain == 0) {
+                    //         //     continue;
+                    //         // }
+                    //         // if (contactMain == 1) {
+                    //         //     const contactValuePath = `${detailsBasePath}div[${i}]`;
+                    //         //     const contactValue = textGet(contactValuePath);
+                    //         //     detailsData['category'] = contactValue;
+                    //         // }
+                    //         console.log(detailsBasePath);
+
+                    //     }
+                    // }
+
+                    const contactDetailsPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[2]/div/div';
                     for (let i = 0; i <= divCount(contactDetailsPath); i++) {
                         let detailsBasePath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[2]/div/';
                         if(i == 0){
@@ -147,6 +170,17 @@ async function fbDetails(links) {
                         detailsData[contactKey] = contactValue;
 
                     }
+
+                    const socialMediaPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div/div/div';
+                    for (let index = 0; index < divCount(socialMediaPath); index++) {
+                       let SocialMainPath ='/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div/div/';
+                       const socialValuePath = `${SocialMainPath}div[${index}]/div/div/div[2]/ul/li/div/div/div[1]`;
+                       const socialKeyPath = `${SocialMainPath}div[${index}]/div/div/div[2]/ul/li/div/div/div[2]`;
+                       const spcialKey = textGet(socialKeyPath);
+                       const spcialValue = textGet(socialValuePath);
+                       detailsData[spcialKey] = spcialValue;
+                    }
+
 
                     return data['contactDetails'] = detailsData;
 
@@ -178,17 +212,16 @@ async function fbDetails(links) {
             if (err) {
                 console.error('Error writing file:', err);
             } else {
-                console.log(`File output.json has been saved.`);
+                //console.log(`File output.json has been saved.`);
+                console.log(JSON.stringify(data));
             }
         });
     }
 }
 
-fbDetails([
-    'https://www.facebook.com/TroyMichaelPhotgraphy',
-    'https://www.facebook.com/profile.php?id=61552158826567'
-]);
-
-
-// '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[2]/div/div[sfsdfsdf]/div/div/div[2]/ul/li/div/div/div[1]'
-// '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[3]'
+// fbDetails([
+//     'https://www.facebook.com/TroyMichaelPhotgraphy',
+//     'https://www.facebook.com/profile.php?id=61552158826567'
+// ]);
+const encodedUsernames = process.argv[2];
+fbDetails(encodedUsernames);
