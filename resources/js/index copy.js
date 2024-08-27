@@ -4,6 +4,9 @@ import fs from 'fs';
 let browser;
 let data = [];
 
+
+const contactPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/'; // next div loop
+
 async function fbDetails(links) {
     try {
         // browser = await puppeteer.launch();
@@ -12,13 +15,16 @@ async function fbDetails(links) {
             args: ['--start-maximized'],
         });
 
+        // check Url String
+        function checkProfileId(url) {
+            const pattern = /profile\.php\?id=\d+/;
+            return pattern.test(url);
+        }
 
         for (const link of links) {
-
-            // Create New Page
             const page = await browser.newPage();
             let url = '';
-
+            let profileIdUrl = null;
             // Check Valied Link
             if (!url.includes('https://') && !url.includes('http://')) {
                 url = link;
@@ -28,50 +34,171 @@ async function fbDetails(links) {
                 continue;
             }
 
-            await page.goto(url);
-            await page.waitForFunction(() => {
-                return (
-                    document.evaluate(
-                        '/html/body/div[1]/div/div[1]/div/div[5]/div/div/div[1]/div/div[2]/div/div/div/div[2]',
-                        document,
-                        null,
-                        XPathResult.FIRST_ORDERED_NODE_TYPE,
-                        null
-                    ).singleNodeValue !== null
-                );
-            });
+            const currentPageAllData = {};
 
-            // remove popup
-            // await page.goto(url);
-
-            const result = await page.evaluate(() => {
-                const mainPath =
-                    '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div[2]/div/div[1]/div[2]/div/div[1]/div/div/div/div/div[2]/div[2]/div/ul/';
-                const elements = document.evaluate(
-                    `${mainPath}div`,
-                    document,
-                    null,
-                    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-                    null
-                );
-                const data = {};
-
-                for (let i = 0; i < elements.snapshotLength; i++) {
-                    const element = elements.snapshotItem(i);
-                    const iconElement = element.querySelector('img');
-                    data[`element_${i}`] = {
-                        textContent: element ? element.textContent.trim() : 'Element not found',
-                        iconSrc: iconElement ? iconElement.src : ''
-                    };
+            try {
+                await page.goto(url, { waitUntil: 'networkidle0', timeout: 40000 });
+                if (checkProfileId(url)) {
+                    profileIdUrl = page.url();
                 }
 
-                data['element_100'] = { url: window.location.href };
-                return data;
-            });
+                // if scroll page then use
+                // await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
 
-            data.push(result);
+                // remove popup
+                await page.keyboard.press('Escape');
 
+                // Post Data Collect
+                const postDetails = await page.evaluate(() => {
+
+                    const data = {};
+                    function textGet(contentPath) {
+                        const elementText = document.evaluate(
+                            contentPath,
+                            document,
+                            null,
+                            XPathResult.FIRST_ORDERED_NODE_TYPE,
+                            null
+                        ).singleNodeValue;
+                        return elementText.innerText.trim();
+                    }
+
+                    // Post Thake Name collect
+                    const namePath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div[2]/div/div[2]/div/div[1]/div/div/div/div/div/div/div/div/div/div/div[13]/div/div/div[2]/div/div[2]/div/div[1]';
+                    const nameText = textGet(namePath);
+
+                    // Post Thake Time Collect
+                    const timePath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div[2]/div/div[2]/div/div[1]/div/div/div/div/div/div/div/div/div/div/div[13]/div/div/div[2]/div/div[2]/div/div[2]';
+                    const timeText = textGet(timePath).replace(/\s+/g, ' ');
+
+                    // Send Data post array
+                    return data['postDetails'] = { name: nameText, timeText: timeText };
+                });
+                currentPageAllData['postDetails'] = postDetails;
+            } catch (error) {
+                console.error(`An Error Ocurred for ${url} : `, error.message);
+                data.push({ url, error: error.message });
+            }
             await page.close();
+
+
+
+            // New Page Contact Details
+            const newPage = await browser.newPage();
+            let newUrl = '';
+            if (checkProfileId(link)) {
+                if (profileIdUrl != null) {
+                    newUrl = `${profileIdUrl}?sk=about`;
+                } else {
+                    await newPage.close();
+                }
+            } else {
+                newUrl = `${link}/about_contact_and_basic_info`;
+            }
+
+            try {
+                await newPage.goto(newUrl, { waitUntil: 'networkidle0', timeout: 60000 });
+                // await newPage.click('body');
+                // await page.mouse.click(100, 200);
+                // await newPage.keyboard.press('Escape');
+                const contactDetails = await newPage.evaluate(() => {
+
+                    const data = {};
+                    function textGet(contentPath) {
+                        const elementText = document.evaluate(
+                            contentPath,
+                            document,
+                            null,
+                            XPathResult.FIRST_ORDERED_NODE_TYPE,
+                            null
+                        ).singleNodeValue;
+                        return elementText ? elementText.innerText.trim() : 'Not found';
+                    }
+
+                    function divCount(countPath) {
+                        const nodesSnapShot = document.evaluate(countPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+                        return nodesSnapShot.snapshotLength;
+                    }
+
+
+                    let detailsData = {};
+
+                    // const contactDetailsMailPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div';
+                    // for (let mainPath = 0; mainPath < divCount(contactDetailsMailPath); mainPath++) {
+                    //     let contactDetailsMailPathNext = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div';
+
+                    //     for (let contactMain = 0; contactMain < divCount(`${contactDetailsMailPathNext}/div[${mainPath}]/div/div`); contactMain++) {
+
+                    //         console.log(contactDetailsMailPathNext);
+                    //         let detailsBasePath = `${contactDetailsMailPathNext}/div[${mainPath}]/div/`;
+                    //         // if (contactMain == 0) {
+                    //         //     continue;
+                    //         // }
+                    //         // if (contactMain == 1) {
+                    //         //     const contactValuePath = `${detailsBasePath}div[${i}]`;
+                    //         //     const contactValue = textGet(contactValuePath);
+                    //         //     detailsData['category'] = contactValue;
+                    //         // }
+                    //         console.log(detailsBasePath);
+
+                    //     }
+                    // }
+
+                    const contactDetailsPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[2]/div/div';
+                    for (let i = 0; i <= divCount(contactDetailsPath); i++) {
+                        let detailsBasePath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[2]/div/';
+                        if(i == 0){
+                            continue;
+                        }
+                        if(i == 1){
+                            const contactValuePath = `${detailsBasePath}div[${i}]`;
+                            const contactValue = textGet(contactValuePath);
+                            detailsData['category'] = contactValue;
+                        }
+                        if(i == 2){
+                            const contactValuePath = `${detailsBasePath}div[${i}]/div/div/div[2]/div[2]/div[1]`;
+                            const contactKeyPath = `${detailsBasePath}div[${i}]/div/div/div[2]/div[2]/div[2]`;
+                            const contactKey = textGet(contactKeyPath);
+                            const contactValue = textGet(contactValuePath);
+                            detailsData[contactKey] = contactValue;
+                        }
+                        const contactValuePath = `${detailsBasePath}div[${i}]/div/div/div[2]/ul/li/div/div/div[2]`;
+                        const contactKey = textGet(contactValuePath);
+
+                        const contactKeyPath = `${detailsBasePath}div[${i}]/div/div/div[2]/ul/li/div/div/div[1]`;
+                        const contactValue = textGet(contactKeyPath);
+                        detailsData[contactKey] = contactValue;
+
+                    }
+
+                    const socialMediaPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div/div/div';
+                    for (let index = 0; index < divCount(socialMediaPath); index++) {
+                       let SocialMainPath ='/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div/div/';
+                       const socialValuePath = `${SocialMainPath}div[${index}]/div/div/div[2]/ul/li/div/div/div[1]`;
+                       const socialKeyPath = `${SocialMainPath}div[${index}]/div/div/div[2]/ul/li/div/div/div[2]`;
+                       const spcialKey = textGet(socialKeyPath);
+                       const spcialValue = textGet(socialValuePath);
+                       detailsData[spcialKey] = spcialValue;
+                    }
+
+
+                    return data['contactDetails'] = detailsData;
+
+
+
+                });
+                currentPageAllData['contactDetails'] = contactDetails;
+
+
+            } catch (error) {
+                console.error(`An Error Ocurred for Contact Details ${newUrl} : `, error.message);
+                data.push({ newUrl, error: error.message });
+            }
+            await newPage.close();
+
+
+            data.push(currentPageAllData);
+
         }
     } catch (error) {
         console.error('Error occurred:', error);
@@ -79,27 +206,23 @@ async function fbDetails(links) {
         if (browser) {
             await browser.close();
         }
+        console.log(JSON.stringify(data));
 
-        // console.log(JSON.stringify(data));
-        fs.writeFile('output.json', JSON.stringify(data, null, 2), (err) => {
-            if (err) {
-                console.error('Error writing file:', err);
-            } else {
-                console.log(`File output.json has been saved.`);
-            }
-        });
+        // fs.writeFile('output.json', JSON.stringify(data, null, 2), (err) => {
+        //     if (err) {
+        //         console.error('Error writing file:', err);
+        //     } else {
+        //         //console.log(`File output.json has been saved.`);
+        //         console.log(JSON.stringify(data));
+        //     }
+        // });
     }
 }
 
-// Get usernames from command-line arguments
-// const usernames = JSON.parse(process.argv[2]);
-// fbDetails(usernames);
-
-
-fbDetails([
-    'https://www.facebook.com/TroyMichaelPhotgraphy',
-    'https://www.facebook.com/SpiritOfTheTetonsPhotography',
-    'https://www.facebook.com/profile.php?id=61552158826567'
-]);
-
-
+// fbDetails([
+//     'https://www.facebook.com/TroyMichaelPhotgraphy',
+//     'https://www.facebook.com/profile.php?id=61552158826567'
+// ]);
+const encodedUsernames = process.argv[2];
+let urlArray = JSON.parse(encodedUsernames);
+fbDetails(urlArray);
