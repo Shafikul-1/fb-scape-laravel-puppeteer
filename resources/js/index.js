@@ -206,16 +206,16 @@ async function fbDetails(links) {
         if (browser) {
             await browser.close();
         }
+        console.log(JSON.stringify(data));
 
-        // console.log(JSON.stringify(data));
-        fs.writeFile('output.json', JSON.stringify(data, null, 2), (err) => {
-            if (err) {
-                console.error('Error writing file:', err);
-            } else {
-                //console.log(`File output.json has been saved.`);
-                console.log(JSON.stringify(data));
-            }
-        });
+        // fs.writeFile('output.json', JSON.stringify(data, null, 2), (err) => {
+        //     if (err) {
+        //         console.error('Error writing file:', err);
+        //     } else {
+        //         //console.log(`File output.json has been saved.`);
+        //         console.log(JSON.stringify(data));
+        //     }
+        // });
     }
 }
 
@@ -224,4 +224,5 @@ async function fbDetails(links) {
 //     'https://www.facebook.com/profile.php?id=61552158826567'
 // ]);
 const encodedUsernames = process.argv[2];
-fbDetails(encodedUsernames);
+let urlArray = JSON.parse(encodedUsernames);
+fbDetails(urlArray);
