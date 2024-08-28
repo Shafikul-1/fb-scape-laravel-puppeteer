@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\CollectDataController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ScapeController;
+use SebastianBergmann\Comparator\ScalarComparator;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,9 +24,15 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('link', LinkController::class)->middleware('auth');
 
+Route::controller(CollectDataController::class)->group(function(){
+    Route::get('all-data', 'index')->name('allData');
+    Route::get('all-data/collect', 'collectData')->name('allData.collectData');
+    Route::post('all-data', 'store')->name('allData.store');
+    Route::delete('all-data/{id}', 'destroy')->name('allData.destroy');
+})->middleware('auth');
 
 
-
+Route::get('scape', [ScapeController::class, 'index']);
 
 
 

@@ -2,12 +2,11 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 
 let browser;
-let data = [];
-
 
 const contactPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/'; // next div loop
 
 async function fbDetails(links) {
+
     try {
         // browser = await puppeteer.launch();
         browser = await puppeteer.launch({
@@ -20,8 +19,10 @@ async function fbDetails(links) {
             const pattern = /profile\.php\?id=\d+/;
             return pattern.test(url);
         }
-
+        let allData = [];
         for (const link of links) {
+            let data = [];
+
             if (!link.startsWith('https://') && !link.startsWith('http://')) {
                 data.push({ 'url': link, 'error': 'Invalid URL' });
                 continue;
@@ -73,8 +74,6 @@ async function fbDetails(links) {
                 data.push({ url, error: error.message });
             }
             await page.close();
-
-
 
             // New Page Contact Details
             const newPage = await browser.newPage();
@@ -191,12 +190,20 @@ async function fbDetails(links) {
                 // console.error(`An Error Ocurred for Contact Details ${newUrl} : `, error.message);
                 data.push({ newUrl, error: error.message });
             }
+
             await newPage.close();
-
-
             data.push(currentPageAllData);
+            allData = allData.concat(data);
 
+            fs.writeFile('output.json', JSON.stringify(allData, null, 2), (err) => {
+                if (err) {
+                    console.error('Error writing file:', err);
+                } else {
+                    console.log(`File output.json has been saved.`);
+                }
+            });
         }
+
     } catch (error) {
         // console.error('Error occurred:', error);
         console.log(JSON.stringify(error));
@@ -204,18 +211,8 @@ async function fbDetails(links) {
         if (browser) {
             await browser.close();
         }
-
-        fs.writeFile('output.json', JSON.stringify(data, null, 2), (err) => {
-            if (err) {
-                console.error('Error writing file:', err);
-            } else {
-                console.log(`File output.json has been saved.`);
-            }
-        });
-        // console.log(JSON.stringify(data));
     }
 }
-
 fbDetails([
     'https://www.facebook.com/ChrisEpworthPhotos',
     'https://www.facebook.com/claireeastmanphotography',

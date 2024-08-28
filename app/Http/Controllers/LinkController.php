@@ -14,7 +14,8 @@ class LinkController extends Controller
      */
     public function index()
     {
-        //
+        $allLinks = AllLink::all();
+        return view('fbData.allLink', compact('allLinks'));
     }
 
     /**
@@ -22,7 +23,7 @@ class LinkController extends Controller
      */
     public function create()
     {
-        return view('inputData');
+        return view('fbData.inputData');
     }
 
     /**
