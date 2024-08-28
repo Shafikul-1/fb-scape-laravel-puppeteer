@@ -121,6 +121,8 @@ async function fbDetails(links) {
 
                     // Loop through each last div and store the path
                     for (let a = 1; a <= totalDivs; a++) {
+
+                        // search Contactinfo
                         const contactDetails = divCount(`${contactPath}/div[${a}]/div/div/div[2]/div`);
                         if (2 <= contactDetails) {
                             for (let c = 2; c <= contactDetails; c++) {
@@ -132,16 +134,60 @@ async function fbDetails(links) {
                             }
                         }
 
-
+                        // Search Contact next info
                         let loopPath = `${contactPath}/div[${a}]/div/div/div[2]/ul/li/div/div`;
                         const contentLoopPath = divCount(`${loopPath}/div`);
-
-                        for (let b = 1; b <= contentLoopPath; b++) {
-                            const contactKey = textGet(`${loopPath}/div[2]`);
-                            const contactValue = textGet(`${loopPath}/div[1]`);
-                            detailsData[contactKey] = contactValue;
-                            // detailsData['keyPath'] = `${loopPath}/div[2]`;
+                        if (1 <= contentLoopPath) {
+                            for (let b = 1; b <= contentLoopPath; b++) {
+                                const contactKey = textGet(`${loopPath}/div[2]`);
+                                const contactValue = textGet(`${loopPath}/div[1]`);
+                                detailsData[contactKey] = contactValue;
+                                // detailsData['keyPath'] = `${loopPath}/div[2]`;
+                            }
                         }
+
+                        // Search Social
+                        const socialPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[3]/div';
+                        const countSocialPath = divCount(`${socialPath}/div`);
+                        if (1 <= countSocialPath) {
+                            // for (let d = 1; d <= contentLoopPath; d++) {
+                            //     const divPath = `${socialPath}/div[${d}]/div/div/div`;
+                            //     const divExists = newPage.$x(`${divPath}/div`);
+                            //     let socialtKey = '';
+                            //     let socialtValue = '';
+                            //     if (divExists.length > 0) {
+                            //         socialtKey = textGet(`${socialPath}/div[${d}]/div/div/div/div[2]/ul/li/div/div/div[2]`);
+                            //         socialtValue = textGet(`${socialPath}/div[${d}]/div/div/div/div[2]/ul/li/div/div/div[2]`);
+                            //         detailsData['fastPath'] = `${socialPath}/div[${d}]/div/div/div/div[2]/ul/li/div/div/div[2]`;
+                            //     } else{
+                            //         socialtKey = textGet(`${socialPath}/div[${d}]/div/div/div[2]/ul/li/div/div/div[1]`);
+                            //         detailsData['secondPath'] = `${socialPath}/div[${d}]/div/div/div[2]/ul/li/div/div/div[1]`;
+                            //         socialtValue = textGet(`${socialPath}/div[${d}]/div/div/div[2]/ul/li/div/div/div[1]`);
+                            //     }
+                            //     // const socialtKey = textGet(`${socialPath}/div[${d}]/div/div/div[2]/ul/li/div/div/div[2]`);
+                            //     detailsData[socialtKey] = socialtValue;
+                            // }
+
+                            for (let d = 1; d <= countSocialPath; d++) {
+                                const divPath = `${socialPath}/div[${d}]/div/div/div`;
+                                const divExists = document.evaluate(`${divPath}/div`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+                                let socialtKey = '';
+                                let socialtValue = '';
+                                if (divExists) {
+                                    detailsData['fst'] = `${divPath}/div[2]/ul/li/div/div/div[2]`;
+                                    socialtKey = textGet(`${divPath}/div[2]/ul/li/div/div/div[2]`);
+                                    socialtValue = textGet(`${divPath}/div[2]/ul/li/div/div/div[1]`);
+                                } else {
+                                    detailsData['second'] = `${divPath}/div[2]/ul/li/div/div/div[2]`;
+                                    socialtKey = textGet(`${divPath}/div[2]/ul/li/div/div/div[2]`);
+                                    socialtValue = textGet(`${divPath}/div[2]/ul/li/div/div/div[1]`);
+                                }
+                                detailsData[socialtKey] = socialtValue;
+                            }
+
+                        }
+
                     }
 
 
@@ -181,7 +227,6 @@ async function fbDetails(links) {
 fbDetails([
     'https://www.facebook.com/TroyMichaelPhotgraphy',
     'https://www.facebook.com/profile.php?id=61552158826567',
-    'https://www.facebook.com/MaximFotografiaCatania/',
     'https://www.facebook.com/andreabonetti.foto/'
 ]);
 // const encodedUsernames = process.argv[2];
