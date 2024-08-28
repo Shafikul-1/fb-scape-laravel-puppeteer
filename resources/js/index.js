@@ -195,7 +195,7 @@ async function fbDetails(links) {
             data.push(currentPageAllData);
             allData = allData.concat(data);
 
-            fs.writeFile('output.json', JSON.stringify(allData, null, 2), (err) => {
+            fs.writeFile('fbData.json', JSON.stringify(allData, null, 2), (err) => {
                 if (err) {
                     console.error('Error writing file:', err);
                 } else {
@@ -211,14 +211,15 @@ async function fbDetails(links) {
         if (browser) {
             await browser.close();
         }
+        console.log(JSON.stringify('Work Complete'));
     }
 }
-fbDetails([
-    'https://www.facebook.com/ChrisEpworthPhotos',
-    'https://www.facebook.com/claireeastmanphotography',
-    'https://www.facebook.com/hawkandhoney',
-    'https://www.facebook.com/juliacalverphotography'
-]);
-// const encodedUsernames = process.argv[2];
-// let urlArray = JSON.parse(encodedUsernames);
-// fbDetails(urlArray);
+const encodedUsernames = process.argv[2];
+let urlArray = JSON.parse(encodedUsernames);
+fbDetails(urlArray);
+// fbDetails([
+//     'https://www.facebook.com/ChrisEpworthPhotos',
+//     'https://www.facebook.com/claireeastmanphotography',
+//     'https://www.facebook.com/hawkandhoney',
+//     'https://www.facebook.com/juliacalverphotography'
+// ]);
