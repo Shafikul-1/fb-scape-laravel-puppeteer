@@ -9,11 +9,11 @@ const contactPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[
 
 async function fbDetails(links) {
     try {
-        browser = await puppeteer.launch();
-        // browser = await puppeteer.launch({
-        //     headless: false,
-        //     args: ['--start-maximized'],
-        // });
+        // browser = await puppeteer.launch();
+        browser = await puppeteer.launch({
+            headless: false,
+            args: ['--start-maximized'],
+        });
 
         // check Url String
         function checkProfileId(url) {
@@ -155,23 +155,6 @@ async function fbDetails(links) {
                         const socialPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[3]/div';
                         const countSocialPath = divCount(`${socialPath}/div`);
                         if (1 <= countSocialPath) {
-                            // for (let d = 1; d <= contentLoopPath; d++) {
-                            //     const divPath = `${socialPath}/div[${d}]/div/div/div`;
-                            //     const divExists = newPage.$x(`${divPath}/div`);
-                            //     let socialtKey = '';
-                            //     let socialtValue = '';
-                            //     if (divExists.length > 0) {
-                            //         socialtKey = textGet(`${socialPath}/div[${d}]/div/div/div/div[2]/ul/li/div/div/div[2]`);
-                            //         socialtValue = textGet(`${socialPath}/div[${d}]/div/div/div/div[2]/ul/li/div/div/div[2]`);
-                            //         detailsData['fastPath'] = `${socialPath}/div[${d}]/div/div/div/div[2]/ul/li/div/div/div[2]`;
-                            //     } else{
-                            //         socialtKey = textGet(`${socialPath}/div[${d}]/div/div/div[2]/ul/li/div/div/div[1]`);
-                            //         detailsData['secondPath'] = `${socialPath}/div[${d}]/div/div/div[2]/ul/li/div/div/div[1]`;
-                            //         socialtValue = textGet(`${socialPath}/div[${d}]/div/div/div[2]/ul/li/div/div/div[1]`);
-                            //     }
-                            //     // const socialtKey = textGet(`${socialPath}/div[${d}]/div/div/div[2]/ul/li/div/div/div[2]`);
-                            //     detailsData[socialtKey] = socialtValue;
-                            // }
 
                             for (let d = 1; d <= countSocialPath; d++) {
                                 if (d == 1) {
@@ -222,23 +205,23 @@ async function fbDetails(links) {
             await browser.close();
         }
 
-        // fs.writeFile('output.json', JSON.stringify(data, null, 2), (err) => {
-        //     if (err) {
-        //         console.error('Error writing file:', err);
-        //     } else {
-        //         console.log(`File output.json has been saved.`);
-        //     }
-        // });
-        console.log(JSON.stringify(data));
+        fs.writeFile('output.json', JSON.stringify(data, null, 2), (err) => {
+            if (err) {
+                console.error('Error writing file:', err);
+            } else {
+                console.log(`File output.json has been saved.`);
+            }
+        });
+        // console.log(JSON.stringify(data));
     }
 }
 
-// fbDetails([
-//     'https://www.facebook.com/ChrisEpworthPhotos',
-//     'https://www.facebook.com/claireeastmanphotography',
-//     'https://www.facebook.com/hawkandhoney',
-//     'https://www.facebook.com/juliacalverphotography'
-// ]);
-const encodedUsernames = process.argv[2];
-let urlArray = JSON.parse(encodedUsernames);
-fbDetails(urlArray);
+fbDetails([
+    'https://www.facebook.com/ChrisEpworthPhotos',
+    'https://www.facebook.com/claireeastmanphotography',
+    'https://www.facebook.com/hawkandhoney',
+    'https://www.facebook.com/juliacalverphotography'
+]);
+// const encodedUsernames = process.argv[2];
+// let urlArray = JSON.parse(encodedUsernames);
+// fbDetails(urlArray);
