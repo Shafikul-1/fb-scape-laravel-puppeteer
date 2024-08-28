@@ -7,5 +7,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('scape', [ScapeController::class, 'index'])->name('scape');
-// Route::get('check', [ScapeController::class, 'check'])->name('check');
+Route::post('scape', [ScapeController::class, 'index'])->name('scape');
+Route::get('sentData', [ScapeController::class, 'sentData'])->name('sentData');

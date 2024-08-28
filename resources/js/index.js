@@ -9,11 +9,11 @@ const contactPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[
 
 async function fbDetails(links) {
     try {
-        // browser = await puppeteer.launch();
-        browser = await puppeteer.launch({
-            headless: false,
-            args: ['--start-maximized'],
-        });
+        browser = await puppeteer.launch();
+        // browser = await puppeteer.launch({
+        //     headless: false,
+        //     args: ['--start-maximized'],
+        // });
 
         // check Url String
         function checkProfileId(url) {
@@ -69,7 +69,7 @@ async function fbDetails(links) {
                 }, url);
                 currentPageAllData['postDetails'] = postDetails;
             } catch (error) {
-                console.error(`An Error Ocurred for ${url} : `, error.message);
+                // console.error(`An Error Ocurred for ${url} : `, error.message);
                 data.push({ url, error: error.message });
             }
             await page.close();
@@ -115,7 +115,7 @@ async function fbDetails(links) {
                         return nodesSnapShot.snapshotLength;
                     }
 
-                    function divExists(divPath){
+                    function divExists(divPath) {
                         const divExists = document.evaluate(`${divPath}/div`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
                         return divExists;
                     }
@@ -174,7 +174,7 @@ async function fbDetails(links) {
                             // }
 
                             for (let d = 1; d <= countSocialPath; d++) {
-                                if(d == 1 ){
+                                if (d == 1) {
                                     continue;
                                 }
                                 const divPath = `${socialPath}/div[${d}]/div/div/div`;
@@ -205,7 +205,7 @@ async function fbDetails(links) {
 
                 currentPageAllData['contactDetails'] = contactDetails;
             } catch (error) {
-                console.error(`An Error Ocurred for Contact Details ${newUrl} : `, error.message);
+                // console.error(`An Error Ocurred for Contact Details ${newUrl} : `, error.message);
                 data.push({ newUrl, error: error.message });
             }
             await newPage.close();
@@ -215,28 +215,30 @@ async function fbDetails(links) {
 
         }
     } catch (error) {
-        console.error('Error occurred:', error);
+        // console.error('Error occurred:', error);
+        console.log(JSON.stringify(error));
     } finally {
         if (browser) {
             await browser.close();
         }
 
-        fs.writeFile('output.json', JSON.stringify(data, null, 2), (err) => {
-            if (err) {
-                console.error('Error writing file:', err);
-            } else {
-                console.log(`File output.json has been saved.`);
-                // console.log(JSON.stringify(data));
-            }
-        });
+        // fs.writeFile('output.json', JSON.stringify(data, null, 2), (err) => {
+        //     if (err) {
+        //         console.error('Error writing file:', err);
+        //     } else {
+        //         console.log(`File output.json has been saved.`);
+        //     }
+        // });
+        console.log(JSON.stringify(data));
     }
 }
 
-fbDetails([
-    'https://www.facebook.com/TroyMichaelPhotgraphy',
-    'https://www.facebook.com/profile.php?id=61552158826567',
-    'https://www.facebook.com/andreabonetti.foto/'
-]);
-// const encodedUsernames = process.argv[2];
-// let urlArray = JSON.parse(encodedUsernames);
-// fbDetails(urlArray);
+// fbDetails([
+//     'https://www.facebook.com/ChrisEpworthPhotos',
+//     'https://www.facebook.com/claireeastmanphotography',
+//     'https://www.facebook.com/hawkandhoney',
+//     'https://www.facebook.com/juliacalverphotography'
+// ]);
+const encodedUsernames = process.argv[2];
+let urlArray = JSON.parse(encodedUsernames);
+fbDetails(urlArray);
