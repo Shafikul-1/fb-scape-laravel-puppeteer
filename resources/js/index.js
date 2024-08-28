@@ -114,6 +114,11 @@ async function fbDetails(links) {
                         const nodesSnapShot = document.evaluate(countPath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
                         return nodesSnapShot.snapshotLength;
                     }
+
+                    function divExists(divPath){
+                        const divExists = document.evaluate(`${divPath}/div`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                        return divExists;
+                    }
                     let detailsData = {};
 
                     const contactPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div[4]/div/div/div/div[1]/div/div/div/div/div[2]/div/div/div/div[2]/div';
@@ -169,19 +174,22 @@ async function fbDetails(links) {
                             // }
 
                             for (let d = 1; d <= countSocialPath; d++) {
+                                if(d == 1 ){
+                                    continue;
+                                }
                                 const divPath = `${socialPath}/div[${d}]/div/div/div`;
-                                const divExists = document.evaluate(`${divPath}/div`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
 
                                 let socialtKey = '';
                                 let socialtValue = '';
-                                if (divExists) {
-                                    detailsData['fst'] = `${divPath}/div[2]/ul/li/div/div/div[2]`;
+                                if (divExists(divPath)) {
+                                    // detailsData['fst'] = `${divPath}/div[2]/ul/li/div/div/div[2]`;
                                     socialtKey = textGet(`${divPath}/div[2]/ul/li/div/div/div[2]`);
                                     socialtValue = textGet(`${divPath}/div[2]/ul/li/div/div/div[1]`);
                                 } else {
-                                    detailsData['second'] = `${divPath}/div[2]/ul/li/div/div/div[2]`;
-                                    socialtKey = textGet(`${divPath}/div[2]/ul/li/div/div/div[2]`);
-                                    socialtValue = textGet(`${divPath}/div[2]/ul/li/div/div/div[1]`);
+                                    // detailsData['second'] = `${divPath}/ul/li/div/div/div[2]`;
+                                    socialtKey = textGet(`${divPath}/ul/li/div/div/div[2]`);
+                                    socialtValue = textGet(`${divPath}/ul/li/div/div/div[1]`);
                                 }
                                 detailsData[socialtKey] = socialtValue;
                             }
