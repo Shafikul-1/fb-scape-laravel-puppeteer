@@ -79,8 +79,15 @@
                         {{ $data['contactDetails']['Address'] ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4 max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer" onclick="selectAndCopy(this)">
+                        @php
+                            $mobile = $data['contactDetails']['Mobile'] ?? 'N/A';
+                            if (Str::startsWith($mobile, '+')) {
+                                $mobile = substr($mobile, 1);
+                            }
+                        @endphp
+                        {{ $mobile }}
                         {{-- {{ $data['contactDetails']['Mobile'] ?? 'N/A' }} --}}
-                        {{ starts_with($data['contactDetails']['Mobile'] ?? '', '+') ? substr($data['contactDetails']['Mobile'], 1) : ($data['contactDetails']['Mobile'] ?? 'N/A') }}
+                        {{-- {{ starts_with($data['contactDetails']['Mobile'] ?? '', '+') ? substr($data['contactDetails']['Mobile'], 1) : ($data['contactDetails']['Mobile'] ?? 'N/A') }} --}}
                     </td>
                     <td class="px-6 py-4 max-w-[100px] overflow-hidden text-ellipsis whitespace-nowrap cursor-pointer" onclick="selectAndCopy(this)">
                         {{ $data['contactDetails']['Email'] ?? 'N/A' }}
