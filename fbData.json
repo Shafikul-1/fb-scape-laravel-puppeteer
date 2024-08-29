@@ -1,0 +1,39 @@
+[
+  {
+    "url": "https://www.linkedin.com/in/laurin-grether-0737a3223/",
+    "error": "Cannot read properties of null (reading 'innerText')"
+  },
+  {
+    "newUrl": "https://www.linkedin.com/in/laurin-grether-0737a3223/about_contact_and_basic_info",
+    "error": "Navigation timeout of 30000 ms exceeded"
+  },
+  {},
+  {
+    "url": "https://www.instagram.com/namoxagentur/",
+    "error": "Cannot read properties of null (reading 'innerText')"
+  },
+  {
+    "contactDetails": {}
+  },
+  {
+    "url": "https://www.instagram.com/wasinger_media_house/",
+    "error": "Cannot read properties of null (reading 'innerText')"
+  },
+  {
+    "contactDetails": {}
+  },
+  {
+    "url": "https://www.instagram.com/thomasmasotti/",
+    "error": "Cannot read properties of null (reading 'innerText')"
+  },
+  {
+    "contactDetails": {}
+  },
+  {
+    "url": "https://www.instagram.com/frauleinj/",
+    "error": "Cannot read properties of null (reading 'innerText')"
+  },
+  {
+    "contactDetails": {}
+  }
+]

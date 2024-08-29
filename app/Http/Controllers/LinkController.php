@@ -23,7 +23,7 @@ class LinkController extends Controller
      */
     public function create()
     {
-        return view('fbData.inputData');
+        return view('fbData.inputLink');
     }
 
     /**
@@ -55,7 +55,7 @@ class LinkController extends Controller
             ];
         }, $filterArray);
 
-        $batchSize = 20;
+        $batchSize = 200;
         $chunks = array_chunk($data, $batchSize);
         // return $chunks;
         foreach($chunks as $chunk){
