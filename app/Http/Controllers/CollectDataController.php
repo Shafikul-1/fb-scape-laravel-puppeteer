@@ -36,8 +36,7 @@ class CollectDataController extends Controller
             File::delete($jsonFile);
         }
 
-
-        $getData =  AllLink::where('check', '=', 'valid')->limit(10)->pluck('link')->toArray();
+        $getData =  AllLink::where('check', '=', 'valid')->limit(3)->pluck('link')->toArray();
 
         try {
            DatasCollectJob::dispatch($getData);

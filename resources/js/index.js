@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
+import path from 'path';
 
 let browser;
 
@@ -8,11 +9,11 @@ const contactPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[
 async function fbDetails(links) {
 
     try {
-        // browser = await puppeteer.launch();
-        browser = await puppeteer.launch({
-            headless: false,
-            args: ['--start-maximized'],
-        });
+        browser = await puppeteer.launch();
+        // browser = await puppeteer.launch({
+        //     headless: false,
+        //     args: ['--start-maximized'],
+        // });
 
         // check Url String
         function checkProfileId(url) {
@@ -195,7 +196,16 @@ async function fbDetails(links) {
             data.push(currentPageAllData);
             allData = allData.concat(data);
 
-            fs.writeFile('fbData.json', JSON.stringify(allData, null, 2), (err) => {
+
+            // fs.writeFile(path.join(__dirname, '..', '..', 'public', 'fbData.json'), JSON.stringify(allData, null, 2), (err) => {
+
+            // // Construct the full path to the resources/js directory
+            // const resourcesJsPath = path.join(__dirname);
+
+            // // Create the file path for fbData.json inside the resources/js directory
+            // const filePath = path.join(resourcesJsPath, 'fbData.json');
+            const filePath = 'fbData.json';
+            fs.writeFile(filePath, JSON.stringify(allData, null, 2), (err) => {
                 if (err) {
                     console.error('Error writing file:', err);
                 } else {
