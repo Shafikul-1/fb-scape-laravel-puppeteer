@@ -13,11 +13,12 @@ class CollectDataController extends Controller
 {
     public function index(){
         $allData = CollectData::all();
+        // return $allData;
         return view('fbData.allData', compact('allData'));
     }
 
     public function collectData(){
-        $jsonFile = public_path('fbData.json');
+        $jsonFile = base_path('resources/js/fbData.json');
         if(File::exists($jsonFile)){
             $fbData = json_decode(File::get($jsonFile), true);
             // return $fbData;
@@ -25,7 +26,8 @@ class CollectDataController extends Controller
                 return [
                     'url' => $data['postDetails']['url'] ?? 'connecton Error',
                     'allInfo' => json_encode($data),
-                    'user_id' => Auth::user()->id,
+                    'user_id' => 1,
+                    // 'user_id' => Auth::user()->id,
                 ];
             }, $fbData);
             $batchSize = 200;
