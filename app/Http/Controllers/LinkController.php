@@ -62,7 +62,7 @@ class LinkController extends Controller
             AllLink::insert($chunk);
         }
 
-        return 'ok';
+        return redirect()->route('link.index')->with('success', 'Link Added Successful');
     }
 
     /**

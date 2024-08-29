@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import fs from 'fs';
+import path from 'path';
 
 let browser;
 
@@ -8,11 +9,11 @@ const contactPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[
 async function fbDetails(links) {
 
     try {
-        // browser = await puppeteer.launch();
-        browser = await puppeteer.launch({
-            headless: false,
-            args: ['--start-maximized'],
-        });
+        browser = await puppeteer.launch();
+        // browser = await puppeteer.launch({
+        //     headless: false,
+        //     args: ['--start-maximized'],
+        // });
 
         // check Url String
         function checkProfileId(url) {
@@ -195,11 +196,12 @@ async function fbDetails(links) {
             data.push(currentPageAllData);
             allData = allData.concat(data);
 
-            fs.writeFile('fbData.json', JSON.stringify(allData, null, 2), (err) => {
+            // Write the file to the specified path
+            fs.writeFile('resources/js/fbData.json', JSON.stringify(allData, null, 2), (err) => {
                 if (err) {
                     console.error('Error writing file:', err);
                 } else {
-                    console.log(`File output.json has been saved.`);
+                    console.log('File has been saved successfully.');
                 }
             });
         }
