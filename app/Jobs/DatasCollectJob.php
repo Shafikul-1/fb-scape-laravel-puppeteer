@@ -28,8 +28,9 @@ class DatasCollectJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $getData =  AllLink::where('check', '=', 'valid')->limit(3)->pluck('link')->toArray();
-        Log::info('Links fetched: ' . json_encode($getData));
+        $getData =  AllLink::where('check', '=', 'valid')->limit(10)->pluck('link')->toArray();
+        // Log::info('Links fetched: ' . json_encode($getData));
+
         $nodeExec = 'node';
         $scriptPath = base_path('resources/js/index.js');
 

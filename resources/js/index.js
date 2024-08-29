@@ -196,20 +196,12 @@ async function fbDetails(links) {
             data.push(currentPageAllData);
             allData = allData.concat(data);
 
-
-            // fs.writeFile(path.join(__dirname, '..', '..', 'public', 'fbData.json'), JSON.stringify(allData, null, 2), (err) => {
-
-            // // Construct the full path to the resources/js directory
-            // const resourcesJsPath = path.join(__dirname);
-
-            // // Create the file path for fbData.json inside the resources/js directory
-            // const filePath = path.join(resourcesJsPath, 'fbData.json');
-            const filePath = 'fbData.json';
-            fs.writeFile(filePath, JSON.stringify(allData, null, 2), (err) => {
+            // Write the file to the specified path
+            fs.writeFile('resources/js/fbData.json', JSON.stringify(allData, null, 2), (err) => {
                 if (err) {
                     console.error('Error writing file:', err);
                 } else {
-                    console.log(`File output.json has been saved.`);
+                    console.log('File has been saved successfully.');
                 }
             });
         }
