@@ -19,9 +19,9 @@
 
     {{ $slot }}
 
-    <div class="fixed bottom-2 right-4 z-50">
+    {{-- <div class="fixed bottom-2 right-4 z-50">
         <p class="font-bold text-5xl text-red-600">Check</p>
-    </div>
+    </div> --}}
 
     <script src="https://kit.fontawesome.com/ed5a9b6893.js" crossorigin="anonymous"></script>
 </body>

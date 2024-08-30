@@ -8,12 +8,24 @@ const contactPath = '/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[
 
 async function fbDetails(links) {
 
+    // Create Dir
+    const currentPath = path.resolve();
+
+    // js path
+    // const dirName = currentPath + '/fbData';
+
+    // laravel path
+    const dirName = currentPath + '/resources/js/fbData';
+    if (!fs.existsSync(dirName)) {
+        fs.mkdirSync(dirName, { recursive: true });
+    }
+
     try {
-        browser = await puppeteer.launch();
-        // browser = await puppeteer.launch({
-        //     headless: false,
-        //     args: ['--start-maximized'],
-        // });
+        // browser = await puppeteer.launch();
+        browser = await puppeteer.launch({
+            headless: false,
+            args: ['--start-maximized'],
+        });
 
         // check Url String
         function checkProfileId(url) {
@@ -192,19 +204,33 @@ async function fbDetails(links) {
                 data.push({ newUrl, error: error.message });
             }
 
-            await newPage.close();
+            // await newPage.close();
             data.push(currentPageAllData);
             allData = allData.concat(data);
 
             // Write the file to the specified path
-            fs.writeFile('resources/js/fbData.json', JSON.stringify(allData, null, 2), (err) => {
+            // fs.writeFile('resources/js/fbData.json', JSON.stringify(allData, null, 2), (err) => {
+            //     if (err) {
+            //         console.error('Error writing file:', err);
+            //     } else {
+            //         console.log('File has been saved successfully.');
+            //     }
+            // });
+
+
+
+            fs.writeFile(dirName + '/running.json', JSON.stringify(allData, null, 2), (err) => {
                 if (err) {
                     console.error('Error writing file:', err);
                 } else {
                     console.log('File has been saved successfully.');
                 }
             });
+
+
         }
+
+
 
     } catch (error) {
         // console.error('Error occurred:', error);
@@ -212,6 +238,27 @@ async function fbDetails(links) {
     } finally {
         if (browser) {
             await browser.close();
+        }
+
+        if (fs.existsSync(dirName + '/running.json')) {
+            const randomNumber = Math.random();
+            let newName = dirName + '/data_' + Math.floor(randomNumber * 200) + '_.json';
+
+            if (fs.existsSync(newName)) {
+                newName = dirName + '/data_' + Math.floor(randomNumber * 20000) + '_.json';
+            }
+
+            fs.rename(dirName + '/running.json', newName, (err) => {
+                if (err) {
+                    console.log('file rename error');
+                } else {
+                    console.log('file rename successfully');
+                }
+            })
+
+        } else {
+            console.log('file not exits');
+
         }
         console.log(JSON.stringify('Work Complete'));
     }
@@ -222,6 +269,7 @@ fbDetails(urlArray);
 // fbDetails([
 //     'https://www.facebook.com/ChrisEpworthPhotos',
 //     'https://www.facebook.com/claireeastmanphotography',
-//     'https://www.facebook.com/hawkandhoney',
-//     'https://www.facebook.com/juliacalverphotography'
 // ]);
+
+// 'https://www.facebook.com/hawkandhoney',
+// 'https://www.facebook.com/juliacalverphotography'

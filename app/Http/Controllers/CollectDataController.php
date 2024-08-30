@@ -20,30 +20,11 @@ class CollectDataController extends Controller
 
     public function collectData()
     {
-        $jsonFile = base_path('resources/js/fbData.json');
-        if (File::exists($jsonFile)) {
-            $fbData = json_decode(File::get($jsonFile), true);
-            // return $fbData;
-            $collectData = array_map(function ($data) {
-                return [
-                    'url' => $data['postDetails']['url'] ?? 'connecton Error',
-                    'allInfo' => json_encode($data),
-                    'user_id' => 1,
-                    // 'user_id' => Auth::user()->id,
-                ];
-            }, $fbData);
-            $batchSize = 200;
-            $chunks = array_chunk($collectData, $batchSize);
-            foreach ($chunks as $chunk) {
-                CollectData::insert($chunk);
-            }
-            File::delete($jsonFile);
-        }
 
         //$getData =  AllLink::where('check', '=', 'valid', '&&', 'status', '=', 'noaction')->limit(10)->pluck('link')->toArray();
         $getData = AllLink::where('check', 'valid')
             ->where('status', 'noaction')
-            ->limit(10)
+            ->limit(3)
             ->pluck('link')
             ->toArray();
 
@@ -66,6 +47,46 @@ class CollectDataController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function reciveData()
+    {
+        $filesPath = base_path('resources/js/fbData');
+        if (File::exists($filesPath)) {
+            $files = File::files($filesPath);
+
+            array_map(function ($file) use ($filesPath) {
+                $fileName = $file->getFilename();
+                if($fileName === 'running.json'){
+                    return;
+                }
+                $filePath = $filesPath . DIRECTORY_SEPARATOR . $fileName;
+                $fileData = json_decode(File::get($filePath, true));
+                if (is_array($fileData)) {
+                    $fileInsert = array_map(function ($data) {
+                        return [
+                            'url' => $data->postDetails->url,
+                            'allInfo' => json_encode($data),
+                            'user_id' => 1,
+                            // 'user_id' => Auth::user()->id,
+                        ];
+                    }, $fileData);
+                    $batchSize = 10;
+                    $chunks = array_chunk($fileInsert, $batchSize);
+                    foreach ($chunks as $chunk) {
+                        CollectData::insert($chunk);
+                    }
+                } else{
+                    return 'File Data Format Wrong';
+                }
+
+                File::delete($filePath);
+
+                return 'Success Data Insert';
+            }, $files);
+        } else {
+            return 'Already up to date';
+        }
     }
 
     public function multiwork(Request $request)
