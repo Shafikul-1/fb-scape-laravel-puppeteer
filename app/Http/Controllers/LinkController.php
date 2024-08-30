@@ -14,7 +14,7 @@ class LinkController extends Controller
      */
     public function index()
     {
-        $allLinks = AllLink::all();
+        $allLinks = AllLink::paginate(10);
         return view('fbData.allLink', compact('allLinks'));
     }
 
@@ -94,6 +94,15 @@ class LinkController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $deleteLink = AllLink::find($id)->delete();
+        return $deleteLink ? redirect()->back()->with('success', 'link delete succesful') : redirect()->back()->with('error', 'Someting went wrong');
+    }
+
+    // Multi work
+    public function multiwork(Request $request)
+    {
+        return $request;
+        // $deleteLink = AllLink::find($id)->delete();
+        // return $deleteLink ? redirect()->back()->with('success', 'link delete succesful') : redirect()->back()->with('error', 'Someting went wrong');
     }
 }

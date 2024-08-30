@@ -13,7 +13,7 @@ class CollectDataController extends Controller
 {
     public function index()
     {
-        $allData = CollectData::all();
+        $allData = CollectData::orderByDesc('id')->paginate(5);
         // return $allData;
         return view('fbData.allData', compact('allData'));
     }
@@ -66,5 +66,26 @@ class CollectDataController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function multiwork(Request $request)
+    {
+        $request->validate([
+            'action' => 'required|string',
+            'multiData' => 'required|array'
+        ]);
+        $action = $request->action;
+        if ($action == 'delete') {
+            foreach ($request->multiData as $updateId) {
+                CollectData::where('id', $updateId)->delete();
+            }
+            return redirect()->back()->with('success', 'Data Delerte Sucessful ');
+        }
+        if ($action == 'complete') {
+            foreach ($request->multiData as $updateId) {
+                CollectData::where('id', $updateId)->update(['status' => 'complete']);
+            }
+            return redirect()->back()->with('success', 'Data Update Sucessful ');
+        }
     }
 }

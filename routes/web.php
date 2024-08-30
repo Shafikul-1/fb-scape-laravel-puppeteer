@@ -23,12 +23,15 @@ Route::middleware('auth')->group(function () {
 
 
 Route::resource('link', LinkController::class)->middleware('auth');
+// Route::post('link-multiwork',[LinkController::class, 'multiwork'])->name('link.multiwork')->middleware('auth');
+Route::post('link/multiwork', [LinkController::class, 'multiwork'])->name('link.multiwork')->middleware('auth');
 
 Route::controller(CollectDataController::class)->group(function(){
     Route::get('all-data', 'index')->name('allData');
     Route::get('all-data/collect', 'collectData')->name('allData.collectData');
     Route::post('all-data', 'store')->name('allData.store');
     Route::delete('all-data/{id}', 'destroy')->name('allData.destroy');
+    Route::post('all-data/multiwork', 'multiwork')->name('allData.multiwork');
 })->middleware('auth');
 
 
