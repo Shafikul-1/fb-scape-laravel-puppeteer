@@ -14,7 +14,7 @@ class LinkController extends Controller
      */
     public function index()
     {
-        $allLinks = AllLink::paginate(10);
+        $allLinks = AllLink::paginate(20);
         return view('fbData.allLink', compact('allLinks'));
     }
 

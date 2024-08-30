@@ -13,7 +13,7 @@ class CollectDataController extends Controller
 {
     public function index()
     {
-        $allData = CollectData::orderByDesc('id')->paginate(5);
+        $allData = CollectData::orderByDesc('id')->paginate(20);
         // return $allData;
         return view('fbData.allData', compact('allData'));
     }
