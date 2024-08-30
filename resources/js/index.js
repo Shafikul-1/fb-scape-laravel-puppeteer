@@ -21,11 +21,11 @@ async function fbDetails(links) {
     }
 
     try {
-        // browser = await puppeteer.launch();
-        browser = await puppeteer.launch({
-            headless: false,
-            args: ['--start-maximized'],
-        });
+        browser = await puppeteer.launch();
+        // browser = await puppeteer.launch({
+        //     headless: false,
+        //     args: ['--start-maximized'],
+        // });
 
         // check Url String
         function checkProfileId(url) {
@@ -204,20 +204,9 @@ async function fbDetails(links) {
                 data.push({ newUrl, error: error.message });
             }
 
-            // await newPage.close();
+            await newPage.close();
             data.push(currentPageAllData);
             allData = allData.concat(data);
-
-            // Write the file to the specified path
-            // fs.writeFile('resources/js/fbData.json', JSON.stringify(allData, null, 2), (err) => {
-            //     if (err) {
-            //         console.error('Error writing file:', err);
-            //     } else {
-            //         console.log('File has been saved successfully.');
-            //     }
-            // });
-
-
 
             fs.writeFile(dirName + '/running.json', JSON.stringify(allData, null, 2), (err) => {
                 if (err) {
@@ -226,11 +215,7 @@ async function fbDetails(links) {
                     console.log('File has been saved successfully.');
                 }
             });
-
-
         }
-
-
 
     } catch (error) {
         // console.error('Error occurred:', error);

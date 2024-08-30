@@ -13,18 +13,19 @@ class CollectDataController extends Controller
 {
     public function index()
     {
+
+        $fileData = $this->reciveData();
         $allData = CollectData::orderByDesc('id')->paginate(20);
-        // return $allData;
+        //  return $fileData;
         return view('fbData.allData', compact('allData'));
     }
 
     public function collectData()
     {
-
         //$getData =  AllLink::where('check', '=', 'valid', '&&', 'status', '=', 'noaction')->limit(10)->pluck('link')->toArray();
         $getData = AllLink::where('check', 'valid')
             ->where('status', 'noaction')
-            ->limit(3)
+            ->limit(10)
             ->pluck('link')
             ->toArray();
 
@@ -49,29 +50,30 @@ class CollectDataController extends Controller
         //
     }
 
-    public function reciveData()
+    private function reciveData()
     {
         $filesPath = base_path('resources/js/fbData');
         if (File::exists($filesPath)) {
-            $files = File::files($filesPath);
+            $fullFilePath = File::files($filesPath);
 
-            array_map(function ($file) use ($filesPath) {
-                $fileName = $file->getFilename();
+            array_map(function ($fileCheck) use ($filesPath) {
+                $fileName = $fileCheck->getFilename();
                 if($fileName === 'running.json'){
                     return;
                 }
                 $filePath = $filesPath . DIRECTORY_SEPARATOR . $fileName;
                 $fileData = json_decode(File::get($filePath, true));
+
                 if (is_array($fileData)) {
                     $fileInsert = array_map(function ($data) {
                         return [
-                            'url' => $data->postDetails->url,
+                            'url' =>   $data->postDetails->url ?? ($data->url ?? 'network error'),
                             'allInfo' => json_encode($data),
                             'user_id' => 1,
                             // 'user_id' => Auth::user()->id,
                         ];
                     }, $fileData);
-                    $batchSize = 10;
+                    $batchSize = 100;
                     $chunks = array_chunk($fileInsert, $batchSize);
                     foreach ($chunks as $chunk) {
                         CollectData::insert($chunk);
@@ -83,7 +85,7 @@ class CollectDataController extends Controller
                 File::delete($filePath);
 
                 return 'Success Data Insert';
-            }, $files);
+            }, $fullFilePath);
         } else {
             return 'Already up to date';
         }
