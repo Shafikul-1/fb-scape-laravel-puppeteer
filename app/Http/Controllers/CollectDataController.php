@@ -25,6 +25,7 @@ class CollectDataController extends Controller
 
     public function collectData()
     {
+        set_time_limit(200);
         // $getData = AllLink::where('check', 'valid')->where('status', 'noaction')->limit(10)->pluck('link')->toArray();
         $getData = AllLink::where('check', 'valid')->where('status', 'noaction')->limit(3)->get();
 
