@@ -9,4 +9,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 Schedule::command('app:data-collect')->everyThreeMinutes();
-Schedule::command('queue:work --stop-when-empty')->everyThreeMinutes();
+Schedule::command('queue:work --stop-when-empty')->everyFourMinutes();

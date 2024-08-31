@@ -27,8 +27,16 @@ class DataCollect extends Command
     public function handle()
     {
         $collecting = new CollectDataController();
+
+        // Just Show return Message
         $getData = $collecting->collectData();
         $this->info($getData);
+
+        // Only Message Return Show
+        $storeData = $collecting->reciveData();
+        $this->info($storeData);
+
+
         return 0;
     }
 }

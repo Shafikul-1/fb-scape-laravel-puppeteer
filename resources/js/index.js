@@ -5,25 +5,26 @@ import path from 'path';
 let browser;
 
 async function fbDetails(getData) {
-    const currentPath = path.resolve();
-    // // js path
-    // const dirName = currentPath + '/fbData';
 
+    // Create Dir
+    const currentPath = path.resolve();
     // laravel path
-    // const dirName = currentPath + '/resources/js/fbData';
-    const dirName = path.join(currentPath, 'fbData');
+    const dirName = currentPath + '/resources/js/fbData';
+
+    // const dirName = path.join(currentPath, 'fbData');
     if (!fs.existsSync(dirName)) {
         fs.mkdirSync(dirName, { recursive: true });
     }
-    // console.log('FIle path' + dirName);
+
+    // Convert Json to JS Object
     const getInfo = JSON.parse(getData);
 
     try {
-        browser = await puppeteer.launch();
-        // browser = await puppeteer.launch({
-        //     headless: false,
-        //     args: ['--start-maximized'],
-        // });
+        // browser = await puppeteer.launch();
+        browser = await puppeteer.launch({
+            headless: false,
+            args: ['--start-maximized'],
+        });
 
         // check Url String
         function checkProfileId(url) {
@@ -97,7 +98,6 @@ async function fbDetails(getData) {
                     newUrl = `${url}/about_contact_and_basic_info`;
                 }
             }
-
 
             try {
                 await newPage.goto(newUrl, { waitUntil: 'networkidle0' });
@@ -209,7 +209,7 @@ async function fbDetails(getData) {
             let newName = dirName + '/data_' + Math.floor(randomNumber * 200) + '_.json';
 
             if (fs.existsSync(newName)) {
-                newName = dirName + '/data_' + Math.floor(randomNumber * 20000) + '_.json';
+                newName = dirName + '/data_' + Math.floor(randomNumber * 200000) + '_.json';
             }
 
             fs.rename(dirName + '/running.json', newName, (err) => {
@@ -219,8 +219,8 @@ async function fbDetails(getData) {
             })
 
         } else {
-            console.log('file not exits');
-            // console.log(JSON.stringify('file not exits'));
+            // console.log('file not exits');
+            console.log(JSON.stringify('file not exits'));
         }
         console.log(JSON.stringify('Work Complete'));
     }
