@@ -5,23 +5,18 @@ import path from 'path';
 let browser;
 
 async function fbDetails(getInfo) {
-    try {
+    // Create Dir
     const currentPath = path.resolve();
-    console.log('Current Path at: ' + currentPath);
+
     // // js path
     // const dirName = currentPath + '/fbData';
 
     // laravel path
-    // const dirName = currentPath + '/resources/js/fbData';
-    const dirName = path.join(currentPath, 'resources', 'js', 'fbData');
+    const dirName = currentPath + '/resources/js/fbData';
     if (!fs.existsSync(dirName)) {
         fs.mkdirSync(dirName, { recursive: true });
-        console.log('Directory created at: ' + dirName);
-    } else {
-        console.log('Directory already exists at: ' + dirName);
     }
-    // console.log('FIle path' + dirName);
-    console.log(getInfo);
+console.log(getInfo);
 
     // try {
     //     browser = await puppeteer.launch();
@@ -229,9 +224,6 @@ async function fbDetails(getInfo) {
     //     }
     //     console.log(JSON.stringify('Work Complete'));
     // }
-    } catch (error) {
-        console.error('Error in fbDetails function:', error);
-    }
 }
 
 // const getInfo = [
@@ -255,5 +247,5 @@ async function fbDetails(getInfo) {
 //     }
 // ];
 
-const getInformation = process.argv[2];
-fbDetails(getInformation);
+const getInfo = process.argv[2];
+fbDetails(getInfo);

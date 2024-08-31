@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportCollectData;
+use App\Jobs\DatasCollectJob;
 use App\Models\AllLink;
 use App\Models\CollectData;
 use Illuminate\Http\Request;
-use App\Jobs\DatasCollectJob;
-use App\Exports\ExportCollectData;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 // use Excel;
 class CollectDataController extends Controller
@@ -24,24 +25,47 @@ class CollectDataController extends Controller
 
     public function collectData()
     {
-        //$getData =  AllLink::where('check', '=', 'valid', '&&', 'status', '=', 'noaction')->limit(10)->pluck('link')->toArray();
-        $getData = AllLink::where('check', 'valid')
-            ->where('status', 'noaction')
-            ->limit(10)
-            ->pluck('link')
-            ->toArray();
+        // $getData = AllLink::where('check', 'valid')->where('status', 'noaction')->limit(10)->pluck('link')->toArray();
+        $getData = AllLink::where('check', 'valid')->where('status', 'noaction')->limit(3)->get();
+
+
+
+        $nodeExec = 'node';
+        $scriptPath = base_path('resources/js/index.js');
+
+        // Encode usernames to pass them to the Node.js script
+        $encodedUsernames = json_encode($getData, JSON_UNESCAPED_SLASHES);
+
+        // Escape the JSON string properly
+        $escapedUsernames = addslashes($encodedUsernames);
+
+        // Construct the shell command
+        $command = "$nodeExec $scriptPath \"$escapedUsernames\"";
+        Log::info('Command: ' . $command);
 
         try {
-            DatasCollectJob::dispatch($getData);
-            foreach ($getData as $key => $value) {
-                AllLink::where('link', '=', $value)->delete();
-            }
-            return 'ok';
-        } catch (\Throwable $th) {
-            throw $th;
+            $output = shell_exec($command);
+            Log::info('Node.js script executed successfully.');
+            $datas = json_decode($output, true);
+            $collectData = response()->json($datas);
+            Log::info('Collect Data ======== ' . $collectData);
+        } catch (\Exception $e) {
+            Log::error('Error executing Node.js script: ' . $e->getMessage());
         }
-    }
 
+
+
+
+        // try {
+        //     DatasCollectJob::dispatch($getData);
+        //     foreach ($getData as $key => $value) {
+        //         AllLink::where('link', '=', $value)->delete();
+        //     }
+        //     return 'ok';
+        // } catch (\Throwable $th) {
+        //     throw $th;
+        // }
+    }
     public function store(Request $request)
     {
         //
