@@ -16,7 +16,6 @@ class CollectDataController extends Controller
 {
     public function index()
     {
-
         $fileData = $this->reciveData();
         $allData = CollectData::orderByDesc('id')->paginate(20);
         //  return $fileData;
@@ -61,7 +60,7 @@ class CollectDataController extends Controller
 
             array_map(function ($fileCheck) use ($filesPath) {
                 $fileName = $fileCheck->getFilename();
-                if($fileName === 'running.json'){
+                if ($fileName === 'running.json') {
                     return;
                 }
                 $filePath = $filesPath . DIRECTORY_SEPARATOR . $fileName;
@@ -81,7 +80,7 @@ class CollectDataController extends Controller
                     foreach ($chunks as $chunk) {
                         CollectData::insert($chunk);
                     }
-                } else{
+                } else {
                     return 'File Data Format Wrong';
                 }
 
@@ -115,7 +114,8 @@ class CollectDataController extends Controller
         }
     }
 
-    public function exportData(){
+    public function exportData()
+    {
         return Excel::download(new ExportCollectData, 'collect-data.xlsx');
     }
 }

@@ -40,7 +40,8 @@ class LinkController extends Controller
             return !empty($value);
         });
 
-        function checkLink ($link){
+        function checkLink($link)
+        {
             return Str::startsWith($link, ['https://', 'http://']) ? 'valid' : 'invalid';
         }
 
@@ -58,7 +59,7 @@ class LinkController extends Controller
         $batchSize = 200;
         $chunks = array_chunk($data, $batchSize);
         // return $chunks;
-        foreach($chunks as $chunk){
+        foreach ($chunks as $chunk) {
             AllLink::insert($chunk);
         }
 
