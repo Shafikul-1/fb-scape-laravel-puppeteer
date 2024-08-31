@@ -6,9 +6,12 @@ use App\Models\AllLink;
 use App\Models\CollectData;
 use Illuminate\Http\Request;
 use App\Jobs\DatasCollectJob;
+use App\Exports\ExportCollectData;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
+use Maatwebsite\Excel\Facades\Excel;
+// use Excel;
 class CollectDataController extends Controller
 {
     public function index()
@@ -110,5 +113,9 @@ class CollectDataController extends Controller
             }
             return redirect()->back()->with('success', 'Data Update Sucessful ');
         }
+    }
+
+    public function exportData(){
+        return Excel::download(new ExportCollectData, 'collect-data.xlsx');
     }
 }

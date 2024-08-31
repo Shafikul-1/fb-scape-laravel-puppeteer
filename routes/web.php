@@ -31,8 +31,8 @@ Route::controller(CollectDataController::class)->group(function(){
     Route::get('all-data/collect', 'collectData')->name('allData.collectData');
     Route::post('all-data', 'store')->name('allData.store');
     Route::delete('all-data/{id}', 'destroy')->name('allData.destroy');
-    Route::get('all-data/recive-data', 'reciveData')->name('allData.reciveData');
     Route::post('all-data/multiwork', 'multiwork')->name('allData.multiwork');
+    Route::get('all-data/export', 'exportData')->name('allData.export');
 })->middleware('auth');
 
 

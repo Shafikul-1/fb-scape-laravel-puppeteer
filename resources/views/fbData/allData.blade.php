@@ -15,6 +15,9 @@
                     placeholder="Search for items">
             </div>
         </div>
+        <div class="">
+            <a href="{{ route('allData.export') }}" target="_blank" rel="noopener noreferrer"  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded capitalize">downlaod</a>
+        </div>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
