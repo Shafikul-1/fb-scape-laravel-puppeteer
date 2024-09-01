@@ -53,6 +53,17 @@ class EmailSenderController extends Controller
 
         $currentTime = now();
 
+        $storeData = array_map(function($value) use ($request) {
+            return [
+                'email' => $value,
+                'email_subject' => $request->email_subject,
+                'email_body' => $request->email_body,
+                'sending_time' => $request->sending_time,
+                'email_files' => $request->email_files,
+            ];
+        }, $filterEmails);
+
+        EmailSender::insert($storeData);
 
         return $filterEmails;
     }
