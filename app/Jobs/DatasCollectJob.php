@@ -47,10 +47,10 @@ class DatasCollectJob implements ShouldQueue
 
         try {
             $output = shell_exec($command);
-            Log::info('Node.js script executed successfully.');
-            $datas = json_decode($output, true);
-            $collectData = response()->json($datas);
-            Log::info('Collect Data ' . $collectData);
+            // Log::info('Node.js script executed successfully.');
+            // $datas = json_decode($output, true);
+            // $collectData = response()->json($datas);
+            // Log::info('Collect Data ' . $collectData);
         } catch (\Exception $e) {
             Log::error('Error executing Node.js script: ' . $e->getMessage());
         }

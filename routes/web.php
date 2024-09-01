@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CollectDataController;
+use App\Http\Controllers\EmailSenderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\ProfileController;
@@ -35,10 +36,8 @@ Route::middleware('auth')->controller(CollectDataController::class)->group(funct
     Route::get('all-data/export', 'exportData')->name('allData.export');
 });
 
-
-Route::get('scape', [ScapeController::class, 'index']);
-
-
+// Email Sender Route
+Route::resource('emails', EmailSenderController::class)->middleware('auth');
 
 
 
