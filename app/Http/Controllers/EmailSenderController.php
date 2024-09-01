@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\EmailSender;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EmailSenderController extends Controller
 {
@@ -52,20 +54,32 @@ class EmailSenderController extends Controller
         $filterEmails = array_filter($allEmails, fn($value) => !empty($value) && strpos($value, '@') !== false);
 
         $currentTime = now();
+        $storeData = [];
+        foreach($filterEmails as $email){
+            $newTime = null;
+            if ($request->has('random_time')) {
+                $randomTime = explode(',', $request->sending_time);
+                $randomSelect = array_rand($randomTime);
+                $newTime = $currentTime->addMinutes($randomTime[$randomSelect]);
+            } else {
+                $newTime = $currentTime->addMinutes($request->sending_time);
+            }
 
-        $storeData = array_map(function($value) use ($request) {
-            return [
-                'email' => $value,
+            $storeData[] = [
+                'email' => $email,
                 'email_subject' => $request->email_subject,
                 'email_body' => $request->email_body,
-                'sending_time' => $request->sending_time,
+                'sending_time' => $newTime,
                 'email_files' => $request->email_files,
+                'user_id' => Auth::user()->id,
             ];
-        }, $filterEmails);
-
-        EmailSender::insert($storeData);
-
-        return $filterEmails;
+        }
+return $storeData;
+        if(EmailSender::insert($storeData)){
+            return 'Ok sent';
+        } else{
+            return 'somentin';
+        }
     }
 
     /**

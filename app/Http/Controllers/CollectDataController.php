@@ -25,17 +25,32 @@ class CollectDataController extends Controller
     {
         // set_time_limit(200);
         // $getData = AllLink::where('check', 'valid')->where('status', 'noaction')->limit(10)->pluck('link')->toArray();
-        $getData = AllLink::where('check', 'valid')->where('status', 'noaction')->limit(3)->get();
+        AllLink::where('status' , 'running')->update([ 'status' => 'pending', ]);
+        $getData = AllLink::where('check', 'valid')->where('status', 'noaction')->limit(10)->get();
         if (!$getData->isEmpty()) {
             try {
-                DatasCollectJob::dispatch($getData);
-                foreach ($getData as $key => $value) {
-                    AllLink::where('link', '=', $value)->delete();
+               $sentJob=  DatasCollectJob::dispatch($getData);
+               if($sentJob){
+                 foreach ($getData as $key => $value) {
+                    AllLink::where('link', '=', $value->link)->update([
+                        'status' => 'running'
+                    ]);
                 }
+               }
+
                 return 'ok';
             } catch (\Throwable $th) {
                 Log::error('CollectData Error : ' . $th->getMessage());
             }
+        }
+    }
+
+    public function linkDelete(){
+        $deleteData = AllLink::where('status', 'pending')->delete();
+        if($deleteData){
+            return 'delete Successfull';
+        }else{
+            return 'delete Failed';
         }
     }
     public function store(Request $request)
