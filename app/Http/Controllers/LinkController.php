@@ -106,4 +106,14 @@ class LinkController extends Controller
         // $deleteLink = AllLink::find($id)->delete();
         // return $deleteLink ? redirect()->back()->with('success', 'link delete succesful') : redirect()->back()->with('error', 'Someting went wrong');
     }
+
+    public function linkDelete()
+    {
+        $deleteData = AllLink::where('status', 'pending')->delete();
+        if ($deleteData) {
+            return 'delete Successfull';
+        } else {
+            return 'delete Failed';
+        }
+    }
 }

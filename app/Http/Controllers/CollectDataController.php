@@ -62,15 +62,6 @@ class CollectDataController extends Controller
         }
     }
 
-    public function linkDelete()
-    {
-        $deleteData = AllLink::where('status', 'pending')->delete();
-        if ($deleteData) {
-            return 'delete Successfull';
-        } else {
-            return 'delete Failed';
-        }
-    }
     public function store(Request $request)
     {
         //

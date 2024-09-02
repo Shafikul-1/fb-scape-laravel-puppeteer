@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\CollectDataController;
+use App\Http\Controllers\LinkController;
 use Illuminate\Console\Command;
 
 class DeleteLink extends Command
@@ -26,7 +26,7 @@ class DeleteLink extends Command
      */
     public function handle()
     {
-        $collecting = new CollectDataController();
+        $collecting = new LinkController();
          // Link linkDelete
          $linkDelete = $collecting->linkDelete();
          $this->info($linkDelete);

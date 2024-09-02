@@ -20,11 +20,11 @@ async function fbDetails(getData) {
     const getInfo = JSON.parse(getData);
 
     try {
-        // browser = await puppeteer.launch();
-        browser = await puppeteer.launch({
-            headless: false,
-            args: ['--start-maximized'],
-        });
+        browser = await puppeteer.launch();
+        // browser = await puppeteer.launch({
+        //     headless: false,
+        //     args: ['--start-maximized'],
+        // });
 
         // check Url String
         function checkProfileId(url) {

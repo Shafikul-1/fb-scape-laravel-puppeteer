@@ -11,3 +11,4 @@ Artisan::command('inspire', function () {
 Schedule::command('app:data-collect')->everyFourMinutes();
 Schedule::command('queue:work --stop-when-empty')->everyThreeMinutes();
 Schedule::command('app:delete-link')->everyTenMinutes();
+Schedule::command('app:delete-limit')->everyThirtyMinutes();
