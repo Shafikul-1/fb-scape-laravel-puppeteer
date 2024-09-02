@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>FB Data Collect</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
-    {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-_-JQNiN3.css') }}"> --}}
-    {{-- <script src="{{ asset('css/tailwind.js') }}"></script> --}}
+    {{-- <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script> --}}
+    <script src="{{ asset('css/tailwind.js') }}"></script>
 </head>
 <body>
     <ul class="flex gap-6 capitalize dark:bg-gray-700">

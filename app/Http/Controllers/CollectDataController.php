@@ -7,6 +7,7 @@ use App\Models\CollectData;
 use Illuminate\Http\Request;
 use App\Jobs\DatasCollectJob;
 use App\Exports\ExportCollectData;
+use App\Models\RequestLimit;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -25,31 +26,48 @@ class CollectDataController extends Controller
     {
         // set_time_limit(200);
         // $getData = AllLink::where('check', 'valid')->where('status', 'noaction')->limit(10)->pluck('link')->toArray();
-        AllLink::where('status' , 'running')->update([ 'status' => 'pending', ]);
+        AllLink::where('status', 'running')->update(['status' => 'pending',]);
         $getData = AllLink::where('check', 'valid')->where('status', 'noaction')->limit(10)->get();
-        if (!$getData->isEmpty()) {
-            try {
-               $sentJob=  DatasCollectJob::dispatch($getData);
-               if($sentJob){
-                 foreach ($getData as $key => $value) {
-                    AllLink::where('link', '=', $value->link)->update([
-                        'status' => 'running'
-                    ]);
-                }
-               }
+        $collectionData = collect();
 
-                return 'ok';
-            } catch (\Throwable $th) {
-                Log::error('CollectData Error : ' . $th->getMessage());
+        if (!$getData->isEmpty()) {
+            foreach ($getData as $key => $value) {
+                $requestLimit = RequestLimit::firstOrCreate(
+                    ['user_id' => $value->user_id],
+                    ['request_limit' => 0]
+                );
+
+                if ($requestLimit->request_limit < 150) {
+                    $requestLimit->increment('request_limit');
+                    $collectionData->push($value);
+                }
+            }
+
+            if (!$collectionData->isEmpty()) {
+                try {
+                    $sentJob =  DatasCollectJob::dispatch($collectionData);
+                    if ($sentJob) {
+                        foreach ($getData as $key => $value) {
+                            AllLink::where('link', '=', $value->link)->update([
+                                'status' => 'running'
+                            ]);
+                        }
+                    }
+
+                    return 'ok';
+                } catch (\Throwable $th) {
+                    Log::error('CollectData Error : ' . $th->getMessage());
+                }
             }
         }
     }
 
-    public function linkDelete(){
+    public function linkDelete()
+    {
         $deleteData = AllLink::where('status', 'pending')->delete();
-        if($deleteData){
+        if ($deleteData) {
             return 'delete Successfull';
-        }else{
+        } else {
             return 'delete Failed';
         }
     }
