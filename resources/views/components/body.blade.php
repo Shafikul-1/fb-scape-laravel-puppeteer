@@ -12,9 +12,9 @@
     <ul class="flex gap-6 capitalize dark:bg-gray-700">
         <li><a href="{{ route('home') }}" class="dark:text-white text-3xl font-bold">Home</a></li>
         <li><a href="{{ route('link.create') }}" class="dark:text-white text-3xl font-bold">Set Link</a></li>
-        <li><a href="" class="dark:text-white text-3xl font-bold">Other</a></li>
+        <li><a href="{{ route('link.index') }}" class="dark:text-white text-3xl font-bold">All Link</a></li>
         <li><a href="{{ route('allData') }}" class="dark:text-white text-3xl font-bold">All Data</a></li>
-        <li><a href="{{ route('emails.create') }}" class="dark:text-white text-3xl font-bold">Emails</a></li>
+        {{-- <li><a href="{{ route('emails.create') }}" class="dark:text-white text-3xl font-bold">Emails</a></li> --}}
     </ul>
 
     {{ $slot }}
