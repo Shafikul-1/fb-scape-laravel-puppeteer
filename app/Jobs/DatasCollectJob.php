@@ -29,7 +29,7 @@ class DatasCollectJob implements ShouldQueue
     public function handle(): void
     {
         // $getData =  AllLink::where('check', '=', 'valid')->limit(10)->pluck('link')->toArray();
-        // Log::info('Data aLL fetched: ' . json_encode($this->datas));
+        Log::info('Data aLL fetched: ' . json_encode($this->datas));
 
         $nodeExec = 'node';
         $scriptPath = base_path('resources/js/index.js');
@@ -47,7 +47,7 @@ class DatasCollectJob implements ShouldQueue
 
         try {
             $output = shell_exec($command);
-            // Log::info('Node.js script executed successfully.');
+            Log::info('Node.js script executed successfully.');
             // $datas = json_decode($output, true);
             // $collectData = response()->json($datas);
             // Log::info('Collect Data ' . $collectData);
