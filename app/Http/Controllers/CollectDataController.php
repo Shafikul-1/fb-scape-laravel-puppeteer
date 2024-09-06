@@ -37,7 +37,7 @@ class CollectDataController extends Controller
                     ['request_limit' => 0]
                 );
 
-                if ($requestLimit->request_limit < 150) {
+                if ($requestLimit->request_limit < 500) {
                     $requestLimit->increment('request_limit');
                     $collectionData->push($value);
                 }
